@@ -1,0 +1,8 @@
+// use schematics to create sidebar
+// see: https://material.angular.io/guide/schematics#navigation-schematic
+ng generate @angular/material:navigation sidebar
+
+
+
+
+
