@@ -4,37 +4,50 @@ import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { CustomerListDataSource, CustomerListItem } from './customer-list-datasource';
 import { CustomerService } from '../customer.service';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 @Component({
-  selector: 'app-customer-list',
-  templateUrl: './customer-list.component.html',
-  styleUrl: './customer-list.component.scss',
-  standalone: true,
-  providers: [CustomerListDataSource, CustomerService],
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule]
+    selector: 'app-customer-list',
+    templateUrl: './customer-list.component.html',
+    styleUrl: './customer-list.component.scss',
+    standalone: true,
+    providers: [CustomerListDataSource, CustomerService],
+    imports: [
+        MatTableModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatToolbar,
+        MatIcon,
+        MatIconButton,
+        RouterModule,
+        MatAnchor
+    ]
 })
 export class CustomerListComponent implements AfterViewInit, OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<CustomerListItem>;
+    @ViewChild(MatPaginator) paginator!: MatPaginator;
+    @ViewChild(MatSort) sort!: MatSort;
+    @ViewChild(MatTable) table!: MatTable<CustomerListItem>;
 
-  constructor(public dataSource: CustomerListDataSource, public customerService: CustomerService) {}
+    constructor(public dataSource: CustomerListDataSource, public customerService: CustomerService) { }
 
-//   dataSource = new MatTableDataSource<CustomerListItem>([{id: 10,name: 'peter'}])
+    //   dataSource = new MatTableDataSource<CustomerListItem>([{id: 10,name: 'peter'}])
 
 
-  ngOnInit() {
-//     this.customerService.getCustomerList().subscribe(data => {
-//         this.dataSource.data = data 
-//     })
-  }
+    ngOnInit() {
+        //     this.customerService.getCustomerList().subscribe(data => {
+        //         this.dataSource.data = data 
+        //     })
+    }
 
-  /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['id', 'name'];
+    /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
+    displayedColumns = ['id', 'name'];
 
-  ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-  }
+    ngAfterViewInit(): void {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
+    }
 }
