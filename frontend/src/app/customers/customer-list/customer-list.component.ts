@@ -2,30 +2,18 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
-import { CustomerListDataSource, CustomerListItem } from './customer-list-datasource';
-import { CustomerService } from '../customer.service';
+import { CustomerListItem, CustomerService } from '../customer.service';
 import { MatToolbar } from '@angular/material/toolbar';
 import { MatAnchor, MatButton, MatIconButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
+
 @Component({
     selector: 'app-customer-list',
     templateUrl: './customer-list.component.html',
-    styleUrl: './customer-list.component.scss',
-    standalone: true,
-    providers: [CustomerListDataSource, CustomerService],
-    imports: [
-        MatTableModule,
-        MatPaginatorModule,
-        MatSortModule,
-        MatToolbar,
-        MatIcon,
-        MatIconButton,
-        RouterModule,
-        MatAnchor,
-        MatToolbar
-    ]
+    providers: [ CustomerService],
+    
 })
 export class CustomerListComponent implements AfterViewInit, OnInit {
     @ViewChild(MatPaginator) paginator!: MatPaginator;

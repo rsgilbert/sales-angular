@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
@@ -10,52 +10,44 @@ import { MatToolbar } from '@angular/material/toolbar';
 import { MatProgressBar } from '@angular/material/progress-bar'
 import { CustomerListItem, CustomerService } from '../customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of, switchMap, tap } from 'rxjs';
 
 
 @Component({
     selector: 'app-edit-customer',
     templateUrl: './edit-customer.component.html',
-    styleUrl: './edit-customer.component.scss',
-    standalone: true,
-    imports: [
-        MatInputModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatRadioModule,
-        MatCardModule,
-        ReactiveFormsModule,
-        MatToolbar,
-        MatProgressBar
-    ]
 })
-export class EditCustomerComponent {
+export class EditCustomerComponent implements OnInit {
+    customer$: Observable<CustomerListItem> | undefined;
+
     constructor(
         private customerService: CustomerService,
         private router: Router,
         private route: ActivatedRoute
     ) {
+    }
+
+    ngOnInit(): void {
         this.route.params.subscribe(params => {
-            this.customerId = params["id"];
+            this.customer$ = this.customerService.getCustomerById(params['id']);
+            this.customer$.subscribe(cust => {
+                this.customerForm = this.fb.group({
+                    _id: [cust._id, Validators.required],
+                    name: [cust.name, Validators.required],
+                    email: cust.email,
+                    phoneNumber: cust.phoneNumber,
+                });
+            })
         })
     }
 
-    customerId: string | undefined;
-
-    // ngOnInit() {
-
-    // }
 
     private fb = inject(FormBuilder);
     customerForm = this.fb.group({
-        _id: [null, Validators.required],
-        name: [null, Validators.required],
-        email: null,
-        phoneNumber: null,
-        company: null,
-
-        postalCode: [null, Validators.compose([
-            Validators.required, Validators.minLength(5), Validators.maxLength(5)])
-        ],
+        _id: ['', Validators.required],
+        name: ['', Validators.required],
+        email: '',
+        phoneNumber: '',
     });
 
     hasUnitNumber = false;
@@ -66,9 +58,9 @@ export class EditCustomerComponent {
         this.isSubmitting = true;
         this.customerForm.disable()
         const customer: CustomerListItem = this.customerForm.value as any
-        this.customerService.createCustomer(customer).subscribe({
+        this.customerService.updateCustomer(customer).subscribe({
             complete: () => {
-                console.log('created customer')
+                console.log('updated customer', customer._id)
                 this.router.navigateByUrl('/customers')
             },
             error: (err) => {

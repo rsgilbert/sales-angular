@@ -14,16 +14,6 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    AsyncPipe,
-  ]
 })
 export class SidebarComponent {
   private breakpointObserver = inject(BreakpointObserver);
