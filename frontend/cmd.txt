@@ -2,7 +2,8 @@
 // see: https://material.angular.io/guide/schematics#navigation-schematic
 ng generate @angular/material:navigation sidebar
 
-
+// generate table component 
+ng generate @angular/material:table customer-list
 
 
 
