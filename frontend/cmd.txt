@@ -5,5 +5,8 @@ ng generate @angular/material:navigation sidebar
 // generate table component 
 ng generate @angular/material:table customer-list
 
+// generate address form component
+ng generate @angular/material:address-form new-customer
+
 
 
