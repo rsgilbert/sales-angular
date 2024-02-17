@@ -23,7 +23,8 @@ import { RouterModule } from '@angular/router';
         MatIcon,
         MatIconButton,
         RouterModule,
-        MatAnchor
+        MatAnchor,
+        MatToolbar
     ]
 })
 export class CustomerListComponent implements AfterViewInit, OnInit {
@@ -31,19 +32,19 @@ export class CustomerListComponent implements AfterViewInit, OnInit {
     @ViewChild(MatSort) sort!: MatSort;
     @ViewChild(MatTable) table!: MatTable<CustomerListItem>;
 
-    constructor(public dataSource: CustomerListDataSource, public customerService: CustomerService) { }
+    constructor(public customerService: CustomerService) { }
 
-    //   dataSource = new MatTableDataSource<CustomerListItem>([{id: 10,name: 'peter'}])
+    dataSource = new MatTableDataSource<CustomerListItem>([])
 
 
     ngOnInit() {
-        //     this.customerService.getCustomerList().subscribe(data => {
-        //         this.dataSource.data = data 
-        //     })
+        this.customerService.getCustomerList().subscribe(data => {
+            this.dataSource.data = data
+        })
     }
 
     /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-    displayedColumns = ['id', 'name'];
+    displayedColumns = ['id', 'name', 'phoneNumber', 'email'];
 
     ngAfterViewInit(): void {
         this.dataSource.sort = this.sort;

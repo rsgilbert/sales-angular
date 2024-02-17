@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
-import { CustomerListComponent } from './customer-list/customer-list.component';
-import { NewCustomerComponent } from './new-customer/new-customer.component';
+import { CustomerListComponent } from './customers/customer-list/customer-list.component';
+import { NewCustomerComponent } from './customers/new-customer/new-customer.component';
+import { EditCustomerComponent } from './customers/edit-customer/edit-customer.component';
 
 export const routes: Routes = [
     {
@@ -10,7 +11,10 @@ export const routes: Routes = [
     {
         component: NewCustomerComponent,
         path: 'customers/new',
-        pathMatch: 'full'
+    },
+    {
+        component: EditCustomerComponent,
+        path: 'customers/:id',
     },
     {
         path: '',

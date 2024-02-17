@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+    Edit Customer
+</mat-toolbar>
+
+@if(isSubmitting) {
+<mat-progress-bar mode="indeterminate" color="accent"></mat-progress-bar>
+}
+
+<form [formGroup]="customerForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-card class="shipping-card">
+        <mat-card-header>
+            <mat-card-title>Customer Details</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="id" formControlName="_id">
+                        @if (customerForm.controls['_id'].hasError('required')) {
+                        <mat-error>id is <strong>required</strong></mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="name" formControlName="name">
+                        @if (customerForm.controls['name'].hasError('required')) {
+                        <mat-error>name is <strong>required</strong></mat-error>
+                        }
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="email" formControlName="email">
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="phone number" formControlName="phoneNumber">
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button [disabled]="isSubmitting" mat-raised-button color="primary" type="submit">Save</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
